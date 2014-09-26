@@ -1,7 +1,7 @@
 #' .parse.date
 #' 
 #' @param txt character; value to convert to a POSIX date
-#' @param format character; name of the format, e.g. "MDY"
+#' @param orders character; name of the format, e.g. "MDY"
 #' @param tz character; optional time zone
 #' @param check.regex Logical; if TRUE, check syntax of 
 #' txt before calling lubridate function.
@@ -23,7 +23,7 @@
 #' @note Internal function, a wrapper for lubridate functions
 #' @rdname parse.date
 
-.parse.date <- function(txt, format, tz=NULL, check.regex=TRUE) {
+.parse.date <- function(txt, orders, tz=NULL, check.regex=TRUE) {
   if (is.null(tz)) {
     tz <- getOption("date.reader.tz", default="UTC")
   }
@@ -31,7 +31,7 @@
   txt <- gsub( "a.m.", "am", txt, ignore.case=TRUE )
   txt <- gsub( "p.m.", "pm", txt, ignore.case=TRUE )
   if (check.regex) {
-    regex <- lookup.regex(format)
+    regex <- lookup.regex(orders)
     if (is.na(regex)) {
       return(NA)
     }
@@ -39,12 +39,12 @@
       return(NA)
     }
   }
-  format <- tolower(format)
-  index <- gregexpr(".", format, fixed=TRUE)
+  orders <- tolower(orders)
+  index <- gregexpr(".", orders, fixed=TRUE)
   index <- as.integer(index[[1]])
-  print("format")
+
   if (index > 1) {
-    format <- substr(format, 1, index-1)
+    orders <- substr(orders, 1, index-1)
   }
-  return(lubridate::parse_date_time(txt, format, tz=tz))
+  return(lubridate::parse_date_time(txt, orders, tz=tz))
 }

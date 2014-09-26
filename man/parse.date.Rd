@@ -3,12 +3,12 @@
 \alias{.parse.date}
 \title{.parse.date}
 \usage{
-.parse.date(txt, format, tz = NULL, check.regex = TRUE)
+.parse.date(txt, orders, tz = NULL, check.regex = TRUE)
 }
 \arguments{
 \item{txt}{character; value to convert to a POSIX date}
 
-\item{format}{character; name of the format, e.g. "MDY"}
+\item{orders}{character; name of the format, e.g. "MDY"}
 
 \item{tz}{character; optional time zone}
 

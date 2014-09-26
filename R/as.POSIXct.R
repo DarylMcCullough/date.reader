@@ -4,9 +4,13 @@
 #' 
 #' @param x character; vector to convert to a POSIX date
 #' 
-#' @param format character; name of the format for the values. If
-#' this parameter is NA, then the function will try to guess the format
-#' for each value
+#' @param orders character; name of the syntax for the values. If
+#' this parameter is NA, then the function will try to guess the orders
+#' for each value. Possible orders are: 
+#' mdy, ymd, dmy
+#' mdy_h, ymd_h, dmy_h
+#' mdy_hm, ymd_hm, dmy_hm
+#' mdy_hms, ymd_hms, dmy_hms
 #' @param tz character; optional time zone
 #' 
 #'
@@ -28,28 +32,28 @@
 #'  dts <- c( '14-02-10', '79-11-18' ) # FAIL(?)
 #'  string.to.POSIXct( dts )  
 #'  
-#'  string.to.POSIXct( dts, format='ymd' )
+#'  string.to.POSIXct( dts, orders='ymd' )
 #'    
 #' @export
 
-string.to.POSIXct <- function( x, format=NA, tz=NULL ) {
+string.to.POSIXct <- function( x, orders=NA, tz=NULL ) {
   if (is.null(tz)) {
     tz <- getOption("date.reader.tz", default="UTC")
   }
-  if (is.na(format)) {
+  if (is.na(orders)) {
     check.regex <- TRUE
   } else {
     check.regex <- FALSE
   }
   
   f <- function(txt) {
-    if ( is.na(format) ) {
-      format <- which.format(txt)
+    if ( is.na(orders) ) {
+      orders <- which.format(txt)
     }
-    if ( is.na(format) ) {
+    if ( is.na(orders) ) {
       return(NA)
     }
-    result <- .parse.date(txt, format, tz=tz, check.regex=check.regex)
+    result <- .parse.date(txt, orders, tz=tz, check.regex=check.regex)
     return(result)
   }
   x <- as.character(x)
@@ -94,5 +98,5 @@ as.POSIXct.character <- function( x, tz="UTC", ...) {
   if (is.na(fmt)) {
     return(NA)
   }
-  return(string.to.POSIXct(x, tz=tz, format=fmt))
+  return(string.to.POSIXct(x, tz=tz, orders=fmt))
 }

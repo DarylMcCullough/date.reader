@@ -91,7 +91,7 @@ read.table <- function(file, ...) {
     nTrials <- getOption("date.reader.nTrials", 10)
     fmt <- which.format(x, nErrors=nErrors, nTrials=nTrials)
     if (!is.na(fmt)) {
-      x <- string.to.POSIXct(x, format=fmt)
+      x <- string.to.POSIXct(x, orders=fmt)
       dat[, col.idx] <- x
       break
     }

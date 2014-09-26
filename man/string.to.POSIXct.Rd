@@ -3,14 +3,18 @@
 \alias{string.to.POSIXct}
 \title{string.to.POSIXct}
 \usage{
-string.to.POSIXct(x, format = NA, tz = NULL)
+string.to.POSIXct(x, orders = NA, tz = NULL)
 }
 \arguments{
 \item{x}{character; vector to convert to a POSIX date}
 
-\item{format}{character; name of the format for the values. If
-this parameter is NA, then the function will try to guess the format
-for each value}
+\item{orders}{character; name of the syntax for the values. If
+this parameter is NA, then the function will try to guess the orders
+for each value. Possible orders are:
+mdy, ymd, dmy
+mdy_h, ymd_h, dmy_h
+mdy_hm, ymd_hm, dmy_hm
+mdy_hms, ymd_hms, dmy_hms}
 
 \item{tz}{character; optional time zone}
 }
@@ -31,7 +35,7 @@ Convers character to POSIXct
  dts <- c( '14-02-10', '79-11-18' ) # FAIL(?)
  string.to.POSIXct( dts )
 
- string.to.POSIXct( dts, format='ymd' )
+ string.to.POSIXct( dts, orders='ymd' )
 }
 \seealso{
 \code{\link[base]{as.POSIXct}} \cr
