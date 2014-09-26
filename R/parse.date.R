@@ -39,6 +39,12 @@
       return(NA)
     }
   }
-
-  return(apply.lubridate.fun(format, txt, tz))
+  format <- tolower(format)
+  index <- gregexpr(".", format, fixed=TRUE)
+  index <- as.integer(index[[1]])
+  print("format")
+  if (index > 1) {
+    format <- substr(format, 1, index-1)
+  }
+  return(lubridate::parse_date_time(txt, format, tz=tz))
 }
